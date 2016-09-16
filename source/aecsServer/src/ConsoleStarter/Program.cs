@@ -9,6 +9,9 @@ namespace ConsoleStarter
     {
         public static void Main(string[] args)
         {
+            var starter = new Aecs.Server.Run();
+            starter.Start();
+
         }
     }
 }
