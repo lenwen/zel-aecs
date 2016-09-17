@@ -12,7 +12,22 @@ namespace Aecs.Server
     {
         public void Start()
         {
+            var dsfdsf = "sdfsdf";
+
             //TODO  check if init file exist.
+            var settingsHelper = new Helpers.SettingsHelper();
+
+            if (settingsHelper.configFileExist)
+            {
+                settingsHelper.ReadSettingsFromFile();
+            }
+            else
+            {
+                //TODO  config file dont exist.
+                dsfdsf = "sdfsdf";
+            }
+            
+
                        
             
             Settings.NodeId = 22;

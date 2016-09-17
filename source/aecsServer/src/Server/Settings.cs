@@ -8,7 +8,7 @@ namespace Aecs.Server
     public static class Settings
     {
         public static int NodeId { get; set; }
-        public static Dictionary<int, Classes.NodeClass> NodesInCluser { get; set; }
+        public static Dictionary<int, Helpers.NodeHelper> NodesInCluser { get; set; }
         public static Dictionary<int, Classes.PowerRelayClass> PowerRelay { get; set; }
 
         public static string TestValue1 { get; set; }
