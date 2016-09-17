@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Aecs.Settings
+namespace Aecs
 {
-    public static class Data
+    public static class Settings
     {
         public static int NodeId { get; set; }
         public static Dictionary<int, Classes.NodeClass> NodesInCluser { get; set; }

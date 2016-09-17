@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using data = Aecs.Settings.Data;
+using settings = Aecs.Settings;
 namespace Aecs.Server
 {
 
@@ -15,8 +15,8 @@ namespace Aecs.Server
 
 
 
-            data.NodeId = 22;
-            data.TestValue1 = "test";
+            settings.NodeId = 22;
+            settings.TestValue1 = "test";
             Console.WriteLine("nice");
             Console.ReadLine();
 
