@@ -10,6 +10,7 @@ namespace Aecs.Server
         public static int NodeId { get; set; }
         public static Dictionary<int, Helpers.NodeHelper> NodesInCluser { get; set; }
         public static Dictionary<int, Classes.PowerRelayClass> PowerRelay { get; set; }
+        public static Dictionary<int, Interfaces.Hardware.Iunits> Units { get; set; }
 
         public static string TestValue1 { get; set; }
         public static string TestValue2 { get; set; }

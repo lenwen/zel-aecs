@@ -7,10 +7,9 @@ namespace Aecs.Server.Interfaces.Functions
 {
     interface IpowerRelay
     {
-        int Id();
+        Aecs.Models.Config.PowerRelayModel Settings { get; set; }
 
-
-        bool IsOn();
+        bool IsOn { get; set; }
 
         void TurnOn();
 
