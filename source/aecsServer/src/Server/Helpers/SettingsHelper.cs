@@ -14,28 +14,26 @@ namespace Aecs.Server.Helpers
         // https://docs.asp.net/en/latest/fundamentals/configuration.html
         // https://blog.jsinh.in/asp-net-5-configuration-microsoft-framework-configurationmodel/#.V91FTSiLRaQ
 
-        private IConfigurationBuilder configFile { get; set; }
-        private IConfigurationRoot configRoot { get; set; }
+        //private IConfigurationBuilder configFile { get; set; }
+        //private IConfigurationRoot configRoot { get; set; }
         public bool configFileExist { get; set; }
-
+        private string configFile { get; set; }
         public SettingsHelper()
         {
+            this.configFile = Directory.GetCurrentDirectory() + "\\aecssettings.json";
+
             var ddsf = "sdfsdf";
-            this.configFile = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("aecssettings.json");
-
-            this.configFileExist = false;
-
-            try
+            if (File.Exists(this.configFile))
             {
-                this.configRoot = this.configFile.Build();
                 this.configFileExist = true;
             }
-            catch
+            else
             {
                 this.configFileExist = false;
             }
+
+            ddsf = "sdfsdf";
+
 
         }
         public void ReadSettingsFromFile()
@@ -50,7 +48,7 @@ namespace Aecs.Server.Helpers
 
             //var dd = this.configFile.Build();
             ddsf = "sdfsdf";
-            var asd = this.configRoot["ddd"];
+            //var asd = this.configRoot["ddd"];
             ddsf = "sdfsdf";
             // work with with a builder using multiple calls
             //var builder = new ConfigurationBuilder();
@@ -75,49 +73,95 @@ namespace Aecs.Server.Helpers
 
         }
 
-        public void ConfigureServices(IServiceCollection services)
-        {
-            // http://developer.telerik.com/featured/new-configuration-model-asp-net-core/
-            var builder = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json")
-            .AddEnvironmentVariables();
-            var Configuration = builder.Build();
+        //this.configFile = new ConfigurationBuilder()
+        //    .SetBasePath(Directory.GetCurrentDirectory())
+        //    .AddJsonFile("aecssettings.json");
 
-            var dsfdsf = (Configuration.GetSection("Smtp"));
+        //this.configFileExist = false;
 
-            // services.Configure<Models.NodeStartupConnect>(Configuration.GetSection("Smtp"));
-            // services.AddMvc();
-            //Other services
-        }
-        public void ConfigureServicesxxxxxxxxxxxx(IServiceCollection services)
-        {
-            //services.Configure<SmtpConfig>(Configuration.GetSection("Smtp"));
-            //services.AddMvc();
-            //Other services
-        }
+        //try
+        //{
+        //    this.configRoot = this.configFile.Build();
+        //    this.configFileExist = true;
+        //}
+        //catch
+        //{
+        //    this.configFileExist = false;
+        //}
+
+        //    public void Savetest()
+        //    {
+        //        var dsf = "sdfdf";
+
+        //        this.configFile = new ConfigurationBuilder()
+        //        .SetBasePath(Directory.GetCurrentDirectory())
+        //        .AddJsonFile("aecssettings.json")
+        //        .Add(new FileConfigurationSource(new KeyValuePair<string, string>("dd", "dff")));
 
 
-        public void Test()
-        {
-            // work with with a builder using multiple calls
-            var builder = new ConfigurationBuilder();
-            builder.SetBasePath(Directory.GetCurrentDirectory());
-            builder.AddJsonFile("appsettings.json");
-            var connectionStringConfig = builder.Build();
+        //        ((IConfigurationSourceContainer)Configuration)
+        //.Add(new MemoryConfigurationSource(
+        //new List<KeyValuePair<string, string>> {
+        //    new KeyValuePair<string, string>("mem-key1", "mem-value1"),
+        //    new KeyValuePair<string, string>("mem-key2", "mem-value2")
+        //}));
 
-            // chain calls together as a fluent API
-            //var config = new ConfigurationBuilder()
-            //    .SetBasePath(Directory.GetCurrentDirectory())
-            //    .AddJsonFile("appsettings.json")
-            //    .AddEntityFrameworkConfig(options =>
-            //        options.UseSqlServer(connectionStringConfig.GetConnectionString("DefaultConnection"))
-            //    )
-            //    .Build();
 
-            //Console.WriteLine("key1={0}", config["key1"]);
-            //Console.WriteLine("key2={0}", config["key2"]);
-            //Console.WriteLine("key3={0}", config["key3"]);
-        }
+        //        var builder = new ConfigurationBuilder();
+        //        builder.AddInMemoryCollection();
+        //        var config = builder.Build();
+        //        dsf = "sdfdf";
+        //        config["somekey"] = "somevalue";
+        //        dsf = "sdfdf";
+        //        // do some other work
+
+        //        var setting = config["somekey"]; // also returns "somevalue"
+        //        dsf = "sdfdf";
+
+        //    }
+        //public void ConfigureServices(IServiceCollection services)
+        //{
+        //    // http://developer.telerik.com/featured/new-configuration-model-asp-net-core/
+        //    var builder = new ConfigurationBuilder()
+        //    .AddJsonFile("appsettings.json")
+        //    .AddEnvironmentVariables();
+        //    var Configuration = builder.Build();
+
+        //    var dsfdsf = (Configuration.GetSection("Smtp"));
+
+        //    // services.Configure<Models.NodeStartupConnect>(Configuration.GetSection("Smtp"));
+        //    // services.AddMvc();
+        //    //Other services
+        //}
+        //public void ConfigureServicesxxxxxxxxxxxx(IServiceCollection services)
+        //{
+        //    //services.Configure<SmtpConfig>(Configuration.GetSection("Smtp"));
+        //    //services.AddMvc();
+        //    //Other services
+        //}
+
+
+        //public void Test()
+        //{
+        //    // work with with a builder using multiple calls
+        //    var builder = new ConfigurationBuilder();
+        //    builder.SetBasePath(Directory.GetCurrentDirectory());
+        //    builder.AddJsonFile("appsettings.json");
+        //    var connectionStringConfig = builder.Build();
+
+        //    // chain calls together as a fluent API
+        //    //var config = new ConfigurationBuilder()
+        //    //    .SetBasePath(Directory.GetCurrentDirectory())
+        //    //    .AddJsonFile("appsettings.json")
+        //    //    .AddEntityFrameworkConfig(options =>
+        //    //        options.UseSqlServer(connectionStringConfig.GetConnectionString("DefaultConnection"))
+        //    //    )
+        //    //    .Build();
+
+        //    //Console.WriteLine("key1={0}", config["key1"]);
+        //    //Console.WriteLine("key2={0}", config["key2"]);
+        //    //Console.WriteLine("key3={0}", config["key3"]);
+        //}
 
     }
 }

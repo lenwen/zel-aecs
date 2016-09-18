@@ -26,7 +26,8 @@ namespace Aecs.Server
                 //TODO  config file dont exist.
                 dsfdsf = "sdfsdf";
             }
-            
+
+            // settingsHelper.Savetest();
 
                        
             
