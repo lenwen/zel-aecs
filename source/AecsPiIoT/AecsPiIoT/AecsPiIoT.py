@@ -14,14 +14,27 @@ import signal
 
 
 # Settings
-dir_1wireOnBoard = '/sys/bus/w1/devices/'
-dir_configFiles = '/etc/aecs'
+dir_OneWireOnBoard = '/sys/bus/w1/devices/'
+dir_ConfigFiles = '/etc/aecs'
 
 #   All threads that is running in system
 threads = {}  
 #thtest = {}  
 
- 
+#   1-wire On Board Temp sensor ds18b20
+sensorOneWireOnBoardDs18b20List = []
+sensorOneWireOnBoardDs18b20CrcWaitingTime = 30
+
+class SensorOneWireDs18b20Class(object):
+    def __init__(self, romid=None, health=None, temp=None, lastchecked=None, status=None, name=None, info=None):
+        self.romid = romid
+        self.health = health
+        self.temp = temp
+        self.lastchecked = lastchecked
+        self.status = status
+        self.name = name
+        self.info = info  
+         
 
 #   OnBoard 1-wire handling
 class OnBoardOneWireHandling (threading.Thread):
@@ -33,10 +46,15 @@ class OnBoardOneWireHandling (threading.Thread):
         self.running = False;
 
     def run(self):
+        global sensorOneWireOnBoardDs18b20List
         self.running = True;
         FolderScanLastTime = 0;
         while(self.running):
             print("running!!!!")
+            if time.time() - FolderScanLastTime > 60:
+                self.getFoldersToScan()
+                FolderScanLastTime = time.time()
+            
             time.sleep(2)
             
             
@@ -44,16 +62,52 @@ class OnBoardOneWireHandling (threading.Thread):
         self.running = False;
         #return super().run()
     
+    def getFoldersToScan(self):
+        global sensorOneWireOnBoardDs18b20List
+        folders = glob.glob(dir_OneWireOnBoard + '28*')
+        for folder in folders:
+            id = os.path.basename(folder)
+            #check if id exist or not in list
+            idAlredyExist = False
+            for oneWire in sensorOneWireOnBoardDs18b20List:
+                if id in oneWire.romid:
+                    idAlredyExist = True
+            
+            if idAlredyExist is False:
+                    # this id dont exist. add this id
+                    sensorOneWireOnBoardDs18b20List.append(SensorOneWireDs18b20Class(id,0,"-999",0,"new","new","new"))
+
+    def readSensorData(self, sensorId):
+        text = '';
+        sensorReadingStartTime = time.time()
+        try:
+            while text.split("\n")[0].find("YES") == -1:
+                tfile = open("/sys/bus/w1/devices/"+ sensorId +"/w1_slave")
+                text = tfile.read()
+                tfile.close()
+                time.sleep(0.2)
+                if time.time() - sensorReadingStartTime > sensorOneWireOnBoardDs18b20CrcWaitingTime:
+                    #   This sensor have not got CRC = YES in more then x sec now.
+                    return sensorId,"ERROR-CRC", -999
+                #time.sleep(1)
+            secondline = text.split("\n")[1]
+            temperaturedata = secondline.split(" ")[9]
+            temperature = float(temperaturedata[2:])
+            temperatures = (temperature / 1000)
+            return sensorId,"OK", temperatures
+        except:
+            return sensorId,"ERROR", -999
+
     def stop(self):
         self.running = False
     
 
 
-def hej(x):
-    pass
+#def hej(x):
+#    pass
 
-def ReadValuesThread():
-    pass
+#def ReadValuesThread():
+#    pass
 
 
 #assert hej(3) 
