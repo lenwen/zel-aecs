@@ -9,6 +9,10 @@ import datetime
 import sys
 import threading
 import signal
+import glob
+#from __builtin__ import str, int
+from warnings import catch_warnings
+from _ast import Str
 
 # Initialize the GPIO Pins
 
@@ -55,6 +59,17 @@ class OnBoardOneWireHandling (threading.Thread):
                 self.getFoldersToScan()
                 FolderScanLastTime = time.time()
             
+            for oneWire in sensorOneWireOnBoardDs18b20List:
+                returnId, returnStatus, returnTemp = self.readSensorData(oneWire.romid)
+                if returnStatus is "ERROR":
+                    oneWire.status = "missing"
+                if returnStatus is "ERROR-CRC":
+                    oneWire.status = "crc-error"                    
+                if returnStatus is "OK":
+                    oneWire.status = "OK"
+                    oneWire.lastchecked = time.time()
+                
+                oneWire.temp = returnTemp
             time.sleep(2)
             
             
@@ -154,12 +169,14 @@ def main():
     signal.signal(signal.SIGINT, signal_handler)
 
     OnBoardOneWireInit();
-    
+    time.sleep(10)
     while True:
-        print("starting")
-        print("hej")
-        print("pelle")
-        time.sleep(5)
+        for oneWire in sensorOneWireOnBoardDs18b20List:
+            print("ID: " + oneWire.romid)
+            print("Temp: " + str(round(oneWire.temp,2)))
+            #print("ID: " + oneWire.romid + " Temp: " + str(round(oneWire.temp)))
+
+        time.sleep(2)
 
     print("Ending")
     
