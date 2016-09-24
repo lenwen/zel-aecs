@@ -1,5 +1,5 @@
-import ptvsd
-ptvsd.enable_attach('xplatdemo')
+#import ptvsd
+#ptvsd.enable_attach('xplatdemo')
 
 #import RPi.GPIO as GPIO
 import io
@@ -11,15 +11,15 @@ import threading
 import signal
 
 # Initialize the GPIO Pins
-os.system('modprobe w1-gpio')  # Turns on the GPIO module
-os.system('modprobe w1-therm') # Turns on the Temperature module
+
 
 # Settings
 dir_1wireOnBoard = '/sys/bus/w1/devices/'
 dir_configFiles = '/etc/aecs'
 
 #   All threads that is running in system
-threads = []    
+threads = {}  
+#thtest = {}  
 
  
 
@@ -62,19 +62,35 @@ def ReadValuesThread():
 def shutDown():
     print ("Stop all runnings threads")
     for t in threads:
-        print('Thead: ' + str(t.getName()) + ' will now stop()')
-        t.stop()
+        print('Thead: ' + str(threads[t].getName()) + ' will now stop()')
+        threads[t].stop()
+       
     print ("Wait 5 sec for threads to end")
     time.sleep(2);
+
     print ("Threads are joining before exit")
     for t in threads:
-        t.join()
+        threads[t].join()
     sys.exit(0)
 
 def signal_handler(signal, frame):
     print ('You pressed Ctrl+C!')
     shutDown()
 
+#   On Board 1-Wire Init
+def OnBoardOneWireInit():
+    if ("onboardOneWire" in threads):
+        #   onboard One Wire is already init
+        if (threads["onboardOneWire"].running == False):
+            #   The thread is not running. start the Thread.
+            threads["onboardOneWire"].start()
+    else:
+        #   Not init. do init
+        os.system('modprobe w1-gpio')  # Turns on the GPIO module
+        os.system('modprobe w1-therm') # Turns on the Temperature module
+        thOnBoardOneWireHandling = OnBoardOneWireHandling("onboardOneWire","1-wire onboard",2)
+        thOnBoardOneWireHandling.start();
+        threads["onboardOneWire"] = thOnBoardOneWireHandling
 
 
 def main():
@@ -83,10 +99,8 @@ def main():
     #   Allow CTRL + c to shutdown the system
     signal.signal(signal.SIGINT, signal_handler)
 
-    thOnBoardOneWireHandling = OnBoardOneWireHandling(2,"1-wire onboard",2)
-    thOnBoardOneWireHandling.start();
-    threads.append(thOnBoardOneWireHandling);
-
+    OnBoardOneWireInit();
+    
     while True:
         print("starting")
         print("hej")
