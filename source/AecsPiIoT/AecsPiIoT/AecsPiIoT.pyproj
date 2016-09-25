@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>a6a12302-584a-4fbe-958b-1bffef650f93</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>AecsPiIoT.py</StartupFile>
+    <StartupFile>Start.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -27,13 +27,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AecsPiIoT.py" />
-    <Compile Include="OneWire\Sensors.py">
+    <Compile Include="DatabaseHandling\__init__.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="packtest1\__init__.py">
+    <Compile Include="OnBoardOneWireHandling\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sensors.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Settings.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Start.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -41,8 +47,8 @@
     <InterpreterReference Include="{2af0f10d-7135-4994-9156-5d01c9c11b7e}\3.4" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="OneWire\" />
-    <Folder Include="packtest1\" />
+    <Folder Include="DatabaseHandling\" />
+    <Folder Include="OnBoardOneWireHandling\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="requirements.txt" />
