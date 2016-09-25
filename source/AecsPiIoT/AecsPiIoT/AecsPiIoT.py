@@ -14,6 +14,14 @@ import glob
 from warnings import catch_warnings
 from _ast import Str
 
+from Settings import Settings
+#from packtest1 import test
+from OneWire.Sensors import *
+
+import packtest1
+#import package1
+
+
 # Initialize the GPIO Pins
 
 
@@ -21,26 +29,23 @@ from _ast import Str
 dir_OneWireOnBoard = '/sys/bus/w1/devices/'
 dir_ConfigFiles = '/etc/aecs'
 
+debugEnable = True
+debugToConsole = True
+debugToFile = True
+
 #   All threads that is running in system
 threads = {}  
-#thtest = {}  
+
+#   All sensors in system
+sensors = {}
+
 
 #   1-wire On Board Temp sensor ds18b20
 sensorOneWireOnBoardDs18b20List = []
-sensorOneWireOnBoardDs18b20CrcWaitingTime = 30
+sensorOneWireOnBoardDs18b20CrcWaitingTime = 5
 
-class SensorOneWireDs18b20Class(object):
-    def __init__(self, romid=None, health=None, temp=None, lastchecked=None, status=None, name=None, info=None):
-        self.romid = romid
-        self.health = health
-        self.temp = temp
-        self.lastchecked = lastchecked
-        self.status = status
-        self.name = name
-        self.info = info  
+
          
-
-#   OnBoard 1-wire handling
 class OnBoardOneWireHandling (threading.Thread):
     def __init__(self, threadID, name, counter):
         threading.Thread.__init__(self)
@@ -54,7 +59,7 @@ class OnBoardOneWireHandling (threading.Thread):
         self.running = True;
         FolderScanLastTime = 0;
         while(self.running):
-            print("running!!!!")
+            #print("running!!!!")
             if time.time() - FolderScanLastTime > 60:
                 self.getFoldersToScan()
                 FolderScanLastTime = time.time()
@@ -70,7 +75,7 @@ class OnBoardOneWireHandling (threading.Thread):
                     oneWire.lastchecked = time.time()
                 
                 oneWire.temp = returnTemp
-            time.sleep(2)
+            time.sleep(1)
             
             
 
@@ -78,7 +83,7 @@ class OnBoardOneWireHandling (threading.Thread):
         #return super().run()
     
     def getFoldersToScan(self):
-        global sensorOneWireOnBoardDs18b20List
+        global sensorOneWireOnBoardDs18b20List, dir_OneWireOnBoard
         folders = glob.glob(dir_OneWireOnBoard + '28*')
         for folder in folders:
             id = os.path.basename(folder)
@@ -90,7 +95,7 @@ class OnBoardOneWireHandling (threading.Thread):
             
             if idAlredyExist is False:
                     # this id dont exist. add this id
-                    sensorOneWireOnBoardDs18b20List.append(SensorOneWireDs18b20Class(id,0,"-999",0,"new","new","new"))
+                    sensorOneWireOnBoardDs18b20List.append(SensorOneWireDs18b20Class(0,id,0,"-999",0,"new","new","new"))
 
     def readSensorData(self, sensorId):
         text = '';
@@ -116,6 +121,8 @@ class OnBoardOneWireHandling (threading.Thread):
     def stop(self):
         self.running = False
     
+
+
 
 
 #def hej(x):
@@ -161,9 +168,10 @@ def OnBoardOneWireInit():
         thOnBoardOneWireHandling.start();
         threads["onboardOneWire"] = thOnBoardOneWireHandling
 
-
+        
+        
 def main():
-    print("Starting!")
+    print("Aecs-Pi-IoT Starting!!")
 
     #   Allow CTRL + c to shutdown the system
     signal.signal(signal.SIGINT, signal_handler)
@@ -172,11 +180,16 @@ def main():
     time.sleep(10)
     while True:
         for oneWire in sensorOneWireOnBoardDs18b20List:
-            print("ID: " + oneWire.romid)
-            print("Temp: " + str(round(oneWire.temp,2)))
+            timeago = time.time() - oneWire.lastchecked
+            print("ID: " + oneWire.romid + " Temp: " + str(round(oneWire.temp,2)) + " Status: " + oneWire.status + " Check: "  + str(round(timeago)))
             #print("ID: " + oneWire.romid + " Temp: " + str(round(oneWire.temp)))
+        print("tstvalue = " + Settings.testvalue)
+        packtest1.test()
 
-        time.sleep(2)
+        #aa = packtest1()
+        #aa.test();
+        
+        time.sleep(5)
 
     print("Ending")
     

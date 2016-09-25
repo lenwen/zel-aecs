@@ -27,9 +27,25 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AecsPiIoT.py" />
+    <Compile Include="OneWire\Sensors.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="packtest1\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Settings.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="{2af0f10d-7135-4994-9156-5d01c9c11b7e}\3.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="OneWire\" />
+    <Folder Include="packtest1\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="requirements.txt" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
