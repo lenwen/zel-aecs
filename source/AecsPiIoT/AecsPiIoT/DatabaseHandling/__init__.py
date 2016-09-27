@@ -33,6 +33,13 @@ class Database(object):
 #            sql = 'create table if not exists settings (name text primary key not null, data text not null;)'
             c.execute("create table if not exists tblsettings (name text primary key not null, data text not null);")
             c.execute("INSERT INTO tblsettings VALUES('dbversion','1');")
+            c.execute("INSERT INTO tblsettings VALUES('debugenable','1');")
+            c.execute("INSERT INTO tblsettings VALUES('debugtoconsole','1');")
+            c.execute("INSERT INTO tblsettings VALUES('debugtofile','1');")
+            c.execute("INSERT INTO tblsettings VALUES('debugfile','1');")
+            c.execute("INSERT INTO tblsettings VALUES('sensoronewireonboardds18b20crcwaitingtime','5');")
+            c.execute("INSERT INTO tblsettings VALUES('sensoronewireonboardds18b20missingtime','30');")
+
             c.execute("CREATE TABLE `tblsensors` (`id`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,	`type`	TEXT NOT NULL,	`tag`	TEXT NOT NULL,	`name`	TEXT,	`info`	TEXT,	`enable`	INTEGER NOT NULL DEFAULT 0,	`isworking`	INTEGER NOT NULL DEFAULT 0,	`collectvaluetime`	INTEGER NOT NULL DEFAULT 0,	`saverealtimetodatabase`	INTEGER NOT NULL DEFAULT 0,	`savehistorytodatabase`	INTEGER NOT NULL DEFAULT 0,	`sensorvalue1`	REAL,	`sensorvalue2`	REAL);")
             c.execute("CREATE INDEX `sensormatch` ON `tblsensors` (`type` ASC,`tag` ASC);")
             conn.commit()
