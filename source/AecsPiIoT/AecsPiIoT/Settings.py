@@ -1,4 +1,5 @@
 class Settings(object):
+    version = '0.0.201609271808'
     osPlatform = ''
     osVersion = ''
     dir_OneWireOnBoard = '/sys/bus/w1/devices/'

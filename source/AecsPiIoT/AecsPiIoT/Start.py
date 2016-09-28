@@ -1,9 +1,15 @@
 #Enable when running debug on raspberry pi
 
-#import ptvsd
-#ptvsd.enable_attach('xplatdemo')
+import ptvsd
+ptvsd.enable_attach('aecspi')
 
-#import RPi.GPIO as GPIO
+
+GPIO = None
+#try:
+    
+#except RuntimeError:
+#    print("Gpio error")
+
 import io
 import os
 import time
@@ -22,6 +28,7 @@ from DatabaseHandling import Database
 
 import OnBoardOneWireHandling
 
+debug = True
 
 def debug(debugtext):
     if Settings.debugEnable:
@@ -77,11 +84,16 @@ def GetPlatformRunningOn():
         Settings.dbfilename = Settings.dir_ConfigFiles + "aecs.db"
     else:
         Settings.dbfilename = Settings.dir_ConfigFiles + "aecs.db"
+        import RPi.GPIO as GPIO
       
 
 def main():
     print("Aecs-Pi-IoT Starting!!")
     
+    if debug:
+        print("Waiting for debug init - 30 sek")
+        ptvsd.wait_for_attach(30)
+
     #   Get platform information
     GetPlatformRunningOn()
 

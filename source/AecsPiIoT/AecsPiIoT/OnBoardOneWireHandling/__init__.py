@@ -3,6 +3,7 @@ import time
 import datetime
 import glob
 import sqlite3
+import os
 
 from Settings import Settings
 
@@ -41,16 +42,17 @@ class OnBoardOneWireHandling (threading.Thread):
             #for oneWire in sensorOneWireOnBoardDs18b20List:
             
             for oneWire in sensorOneWireOnBoardDs18b20Dict:
-                returnId, returnStatus, returnTemp = self.readSensorData(sensorOneWireOnBoardDs18b20Dict[oneWire].data.romid)
+                returnId, returnStatus, returnTemp = self.readSensorData(sensorOneWireOnBoardDs18b20Dict[oneWire].typeOneWireOnBoardDs18b20.romid)
                 if returnStatus is "ERROR":
-                    oneWire.status = "missing"
+                    sensorOneWireOnBoardDs18b20Dict[oneWire].typeOneWireOnBoardDs18b20.status = "missing"
+                    #oneWire.status = "missing"
                 if returnStatus is "ERROR-CRC":
-                    oneWire.status = "crc-error"                    
+                    sensorOneWireOnBoardDs18b20Dict[oneWire].typeOneWireOnBoardDs18b20.status = "crc-error"                    
                 if returnStatus is "OK":
-                    oneWire.status = "OK"
-                    oneWire.lastchecked = time.time()
+                    sensorOneWireOnBoardDs18b20Dict[oneWire].typeOneWireOnBoardDs18b20.status = "OK"
+                    sensorOneWireOnBoardDs18b20Dict[oneWire].typeOneWireOnBoardDs18b20.status = time.time()
                 
-                oneWire.temp = returnTemp
+                sensorOneWireOnBoardDs18b20Dict[oneWire].typeOneWireOnBoardDs18b20.temp = returnTemp
             time.sleep(1)
             
             
@@ -76,7 +78,7 @@ class OnBoardOneWireHandling (threading.Thread):
                 sensordata.enable = True
                 sensordata.collectValueTime = 5
                 sensordata.typeOneWireOnBoardDs18b20 = tmpDs18b20
-                sensorOneWireOnBoardDs18b20Dict[romeid] = sensordata
+                sensorOneWireOnBoardDs18b20Dict[romeId] = sensordata
 
                 #lid = cur.lastrowid
 
