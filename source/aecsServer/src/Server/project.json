@@ -1,8 +1,16 @@
 {
   "version": "1.0.0-*",
+    "buildOptions": {
+    "preserveCompilationContext": true,
+    "debugType": "portable",
+    "emitEntryPoint": true
+  },
+  "publishOptions": {
+    "include": ["**.cshtml", "web.config"]
+  },
    "tools": {
     "Microsoft.DotNet.Watcher.Tools": {
-      "version": "1.0.0-preview4-final",
+      "version": "1.1.0-preview4-final",
       "imports": "portable-net451+win8"
     }
   },
@@ -21,15 +29,13 @@
     "settings": "1.0.0-*",
     "Microsoft.NETCore.App": {
       "type": "platform",
-      "version": "1.0.0"
+      "version": "1.1.0"
     },
-    "Emitter.Runtime": "1.0.0-dev41",
-    "Emitter.Storage.S3": "1.0.0-dev41",
-    "Emitter.Server": "1.0.0-dev41",
-    "Microsoft.AspNetCore.Server.IISIntegration": "1.0.0",
-    "Microsoft.AspNetCore.Server.Kestrel": "1.0.0",
-    "Microsoft.AspNetCore.Mvc": "1.0.0",
-    "Microsoft.AspNetCore.Owin": "1.0.0"
+    // "Microsoft.AspNetCore.Server.IISIntegration": "1.1.0",
+    "Microsoft.AspNetCore.Server.Kestrel": "1.1.0",
+    "Microsoft.AspNetCore.Mvc": "1.1.0",
+    "Microsoft.AspNetCore.StaticFiles": "1.0.0"
+    //"Microsoft.AspNetCore.Owin": "1.1.0"
   },
 
   "frameworks": {
@@ -40,12 +46,7 @@
   },
   "runtimes": {
     "win10-x64": {}
-  },
+  }
 
-  "buildOptions": {
-  "preserveCompilationContext": true,
-  "debugType": "portable",
-  "emitEntryPoint": true
-},
 }
 

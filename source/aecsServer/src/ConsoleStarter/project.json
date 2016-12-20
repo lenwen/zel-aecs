@@ -1,18 +1,20 @@
 {
   "version": "1.0.0-*",
-  "buildOptions": {
+ "buildOptions": {
+    "preserveCompilationContext": true,
+    "debugType": "portable",
     "emitEntryPoint": true
   },
   "tools": {
     "Microsoft.DotNet.Watcher.Tools": {
-      "version": "1.0.0-preview4-final",
+      "version": "1.1.0-preview4-final",
       "imports": "portable-net451+win8"
     }
   },
   "dependencies": {
     "Microsoft.NETCore.App": {
       "type": "platform",
-      "version": "1.0.1"
+      "version": "1.1.0"
     },
     "Server": "1.0.0-*"
   },
