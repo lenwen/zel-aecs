@@ -24,6 +24,8 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "settings", "src\settings\se
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "classtestCore22", "src\classtestCore22\classtestCore22.xproj", "{9AD25A8F-0800-4D80-B08B-5D77D8A72C9F}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AecsIoT", "src\AecsIoT\AecsIoT.xproj", "{67B793D4-1A35-4F92-B576-B0AC8CF1F6A4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,6 +60,10 @@ Global
 		{9AD25A8F-0800-4D80-B08B-5D77D8A72C9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9AD25A8F-0800-4D80-B08B-5D77D8A72C9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9AD25A8F-0800-4D80-B08B-5D77D8A72C9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67B793D4-1A35-4F92-B576-B0AC8CF1F6A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67B793D4-1A35-4F92-B576-B0AC8CF1F6A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67B793D4-1A35-4F92-B576-B0AC8CF1F6A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67B793D4-1A35-4F92-B576-B0AC8CF1F6A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,5 +76,6 @@ Global
 		{F0E8DA27-5345-4008-B554-B7464AD46111} = {A6E7BF8F-1D60-4F6C-9A4E-A355A8ADDBD0}
 		{40C9089C-7824-4D6B-A072-CB7EFF350A22} = {A6E7BF8F-1D60-4F6C-9A4E-A355A8ADDBD0}
 		{9AD25A8F-0800-4D80-B08B-5D77D8A72C9F} = {A6E7BF8F-1D60-4F6C-9A4E-A355A8ADDBD0}
+		{67B793D4-1A35-4F92-B576-B0AC8CF1F6A4} = {A6E7BF8F-1D60-4F6C-9A4E-A355A8ADDBD0}
 	EndGlobalSection
 EndGlobal
