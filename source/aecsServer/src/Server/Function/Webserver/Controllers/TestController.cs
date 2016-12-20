@@ -26,6 +26,7 @@ namespace Aecs.Server.Function.Webserver.Controllers
         [Route("home/tstview")]
         public IActionResult Tstview()
         {
+            Console.WriteLine("tstview running");
             return View();
         }
 
