@@ -55,12 +55,21 @@ namespace AecsIoT
 
     public static class Settings
     {
-        public static Dictionary<string, ClientDataClass> Clients { get; set; }
+        public static Dictionary<UInt64, ClientDataClass> Clients { get; set; }
 
     }
     public class ClientDataClass
     {
         public UInt64 Id { get; set; }
+
+        public Dictionary<string, UserDataClass> Accounts { get; set; }
+
+
+    }
+    public class UserDataClass
+    {
+        public string Password { get; set; }
+        public bool IsSuperUser { get; set; }
 
     }
 }
